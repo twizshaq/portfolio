@@ -1,0 +1,420 @@
+{
+  "updatedAt": "2026-06-19",
+  "dailyUsageBuckets": [
+    {
+      "startDate": "2026-01-29",
+      "tokens": 2406216
+    },
+    {
+      "startDate": "2026-02-06",
+      "tokens": 1482462
+    },
+    {
+      "startDate": "2026-02-07",
+      "tokens": 2339550
+    },
+    {
+      "startDate": "2026-02-09",
+      "tokens": 1298468
+    },
+    {
+      "startDate": "2026-03-05",
+      "tokens": 3090285
+    },
+    {
+      "startDate": "2026-03-06",
+      "tokens": 2082007
+    },
+    {
+      "startDate": "2026-03-07",
+      "tokens": 2091022
+    },
+    {
+      "startDate": "2026-03-08",
+      "tokens": 1124572
+    },
+    {
+      "startDate": "2026-03-09",
+      "tokens": 903429
+    },
+    {
+      "startDate": "2026-03-11",
+      "tokens": 1691263
+    },
+    {
+      "startDate": "2026-03-12",
+      "tokens": 2257666
+    },
+    {
+      "startDate": "2026-03-13",
+      "tokens": 860111
+    },
+    {
+      "startDate": "2026-03-14",
+      "tokens": 4181693
+    },
+    {
+      "startDate": "2026-03-15",
+      "tokens": 2997455
+    },
+    {
+      "startDate": "2026-03-17",
+      "tokens": 2309332
+    },
+    {
+      "startDate": "2026-03-19",
+      "tokens": 21535220
+    },
+    {
+      "startDate": "2026-03-20",
+      "tokens": 6894036
+    },
+    {
+      "startDate": "2026-03-21",
+      "tokens": 7223011
+    },
+    {
+      "startDate": "2026-03-22",
+      "tokens": 4003149
+    },
+    {
+      "startDate": "2026-03-23",
+      "tokens": 1003621
+    },
+    {
+      "startDate": "2026-03-25",
+      "tokens": 13141775
+    },
+    {
+      "startDate": "2026-03-27",
+      "tokens": 6490356
+    },
+    {
+      "startDate": "2026-03-28",
+      "tokens": 7504928
+    },
+    {
+      "startDate": "2026-03-29",
+      "tokens": 7805651
+    },
+    {
+      "startDate": "2026-03-30",
+      "tokens": 664689
+    },
+    {
+      "startDate": "2026-03-31",
+      "tokens": 2506114
+    },
+    {
+      "startDate": "2026-04-01",
+      "tokens": 17369445
+    },
+    {
+      "startDate": "2026-04-02",
+      "tokens": 7882405
+    },
+    {
+      "startDate": "2026-04-03",
+      "tokens": 8528192
+    },
+    {
+      "startDate": "2026-04-04",
+      "tokens": 11415764
+    },
+    {
+      "startDate": "2026-04-05",
+      "tokens": 8745295
+    },
+    {
+      "startDate": "2026-04-06",
+      "tokens": 8400072
+    },
+    {
+      "startDate": "2026-04-07",
+      "tokens": 4752236
+    },
+    {
+      "startDate": "2026-04-08",
+      "tokens": 7638363
+    },
+    {
+      "startDate": "2026-04-09",
+      "tokens": 462540
+    },
+    {
+      "startDate": "2026-04-10",
+      "tokens": 2162300
+    },
+    {
+      "startDate": "2026-04-11",
+      "tokens": 2701558
+    },
+    {
+      "startDate": "2026-04-12",
+      "tokens": 3748028
+    },
+    {
+      "startDate": "2026-04-13",
+      "tokens": 9803684
+    },
+    {
+      "startDate": "2026-04-14",
+      "tokens": 16313220
+    },
+    {
+      "startDate": "2026-04-15",
+      "tokens": 7094914
+    },
+    {
+      "startDate": "2026-04-16",
+      "tokens": 747096
+    },
+    {
+      "startDate": "2026-04-17",
+      "tokens": 9653126
+    },
+    {
+      "startDate": "2026-04-18",
+      "tokens": 9227731
+    },
+    {
+      "startDate": "2026-04-19",
+      "tokens": 12344309
+    },
+    {
+      "startDate": "2026-04-20",
+      "tokens": 4781468
+    },
+    {
+      "startDate": "2026-04-22",
+      "tokens": 1328979
+    },
+    {
+      "startDate": "2026-04-23",
+      "tokens": 16110634
+    },
+    {
+      "startDate": "2026-04-24",
+      "tokens": 19591147
+    },
+    {
+      "startDate": "2026-04-25",
+      "tokens": 14393060
+    },
+    {
+      "startDate": "2026-04-26",
+      "tokens": 11227401
+    },
+    {
+      "startDate": "2026-04-27",
+      "tokens": 19445146
+    },
+    {
+      "startDate": "2026-04-28",
+      "tokens": 7832931
+    },
+    {
+      "startDate": "2026-04-29",
+      "tokens": 22064874
+    },
+    {
+      "startDate": "2026-04-30",
+      "tokens": 3974831
+    },
+    {
+      "startDate": "2026-05-01",
+      "tokens": 1129635
+    },
+    {
+      "startDate": "2026-05-02",
+      "tokens": 8930402
+    },
+    {
+      "startDate": "2026-05-03",
+      "tokens": 2490561
+    },
+    {
+      "startDate": "2026-05-04",
+      "tokens": 31165485
+    },
+    {
+      "startDate": "2026-05-05",
+      "tokens": 36367634
+    },
+    {
+      "startDate": "2026-05-06",
+      "tokens": 11295290
+    },
+    {
+      "startDate": "2026-05-07",
+      "tokens": 10063211
+    },
+    {
+      "startDate": "2026-05-08",
+      "tokens": 27046543
+    },
+    {
+      "startDate": "2026-05-10",
+      "tokens": 3575832
+    },
+    {
+      "startDate": "2026-05-11",
+      "tokens": 2538346
+    },
+    {
+      "startDate": "2026-05-12",
+      "tokens": 14757215
+    },
+    {
+      "startDate": "2026-05-13",
+      "tokens": 1633005
+    },
+    {
+      "startDate": "2026-05-14",
+      "tokens": 11941300
+    },
+    {
+      "startDate": "2026-05-15",
+      "tokens": 6098907
+    },
+    {
+      "startDate": "2026-05-16",
+      "tokens": 21603579
+    },
+    {
+      "startDate": "2026-05-17",
+      "tokens": 46979953
+    },
+    {
+      "startDate": "2026-05-18",
+      "tokens": 11061062
+    },
+    {
+      "startDate": "2026-05-19",
+      "tokens": 8134697
+    },
+    {
+      "startDate": "2026-05-20",
+      "tokens": 12883522
+    },
+    {
+      "startDate": "2026-05-21",
+      "tokens": 3253911
+    },
+    {
+      "startDate": "2026-05-22",
+      "tokens": 6601664
+    },
+    {
+      "startDate": "2026-05-23",
+      "tokens": 13564053
+    },
+    {
+      "startDate": "2026-05-24",
+      "tokens": 17798327
+    },
+    {
+      "startDate": "2026-05-25",
+      "tokens": 20453699
+    },
+    {
+      "startDate": "2026-05-26",
+      "tokens": 9252349
+    },
+    {
+      "startDate": "2026-05-27",
+      "tokens": 13761185
+    },
+    {
+      "startDate": "2026-05-28",
+      "tokens": 30117719
+    },
+    {
+      "startDate": "2026-05-29",
+      "tokens": 10893204
+    },
+    {
+      "startDate": "2026-05-30",
+      "tokens": 4514074
+    },
+    {
+      "startDate": "2026-05-31",
+      "tokens": 12087998
+    },
+    {
+      "startDate": "2026-06-01",
+      "tokens": 32205805
+    },
+    {
+      "startDate": "2026-06-02",
+      "tokens": 4400560
+    },
+    {
+      "startDate": "2026-06-03",
+      "tokens": 3348577
+    },
+    {
+      "startDate": "2026-06-04",
+      "tokens": 1440185
+    },
+    {
+      "startDate": "2026-06-06",
+      "tokens": 3884432
+    },
+    {
+      "startDate": "2026-06-07",
+      "tokens": 19854525
+    },
+    {
+      "startDate": "2026-06-08",
+      "tokens": 7231150
+    },
+    {
+      "startDate": "2026-06-09",
+      "tokens": 33674326
+    },
+    {
+      "startDate": "2026-06-10",
+      "tokens": 11908744
+    },
+    {
+      "startDate": "2026-06-11",
+      "tokens": 8833690
+    },
+    {
+      "startDate": "2026-06-12",
+      "tokens": 15511978
+    },
+    {
+      "startDate": "2026-06-13",
+      "tokens": 43743623
+    },
+    {
+      "startDate": "2026-06-14",
+      "tokens": 8774863
+    },
+    {
+      "startDate": "2026-06-15",
+      "tokens": 5558725
+    },
+    {
+      "startDate": "2026-06-16",
+      "tokens": 2516873
+    },
+    {
+      "startDate": "2026-06-17",
+      "tokens": 6762626
+    },
+    {
+      "startDate": "2026-06-18",
+      "tokens": 9182517
+    },
+    {
+      "startDate": "2026-06-19",
+      "tokens": 3200152
+    }
+  ],
+  "summary": {
+    "peakDailyTokens": 46979953
+  }
+}

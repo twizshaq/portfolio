@@ -1,0 +1,262 @@
+.showcase {
+  --jet-rotate-x: 0deg;
+  --jet-rotate-y: 0deg;
+  --jet-translate-x: 0px;
+  --jet-translate-y: 0px;
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: min(100%, 620px);
+  min-height: clamp(460px, 72vw, 720px);
+  padding: clamp(1rem, 3vw, 2.5rem);
+  overflow: hidden;
+  perspective: 1100px;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(42, 184, 255, 0.14), transparent 42%),
+    linear-gradient(180deg, rgba(7, 16, 26, 0.72), rgba(4, 8, 14, 0.32));
+}
+
+.showcase::before,
+.showcase::after {
+  position: absolute;
+  inset: 10%;
+  z-index: -1;
+  content: "";
+  border: 1px solid rgba(84, 221, 255, 0.12);
+  opacity: 0;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.showcase::after {
+  inset: 18% 7%;
+  border-color: rgba(84, 221, 255, 0.08);
+  transform: scale(0.96);
+}
+
+.showcase[data-active="true"]::before,
+.showcase[data-active="true"]::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(73, 219, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(73, 219, 255, 0.1) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  opacity: 0.08;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 420ms ease;
+}
+
+.showcase[data-active="true"] .grid {
+  opacity: 0.34;
+}
+
+.floatLayer {
+  position: relative;
+  width: min(88vw, 520px);
+  animation: jetFloat 7s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.jetStack {
+  position: relative;
+  aspect-ratio: 1123 / 1401;
+  transform:
+    translate3d(var(--jet-translate-x), var(--jet-translate-y), 0)
+    rotateX(var(--jet-rotate-x))
+    rotateY(var(--jet-rotate-y));
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out;
+  will-change: transform;
+}
+
+.jetImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.normalLayer {
+  opacity: 1;
+  filter: drop-shadow(0 26px 54px rgba(0, 0, 0, 0.45));
+  transform: translateZ(24px);
+  transition:
+    opacity 380ms ease,
+    filter 380ms ease,
+    transform 380ms ease;
+}
+
+.blueprintLayer {
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter:
+    sepia(1)
+    saturate(5)
+    hue-rotate(148deg)
+    brightness(1.22)
+    contrast(1.12)
+    drop-shadow(0 0 16px rgba(74, 215, 255, 0.55));
+  transform: translateZ(42px) scale(1.012);
+  transition:
+    opacity 380ms ease,
+    filter 380ms ease,
+    transform 380ms ease;
+}
+
+.showcase[data-active="true"] .normalLayer {
+  opacity: 0.16;
+  filter:
+    saturate(0.4)
+    brightness(0.74)
+    drop-shadow(0 26px 54px rgba(0, 0, 0, 0.3));
+  transform: translateZ(12px) scale(0.992);
+}
+
+.showcase[data-active="true"] .blueprintLayer {
+  opacity: 0.94;
+  transform: translateZ(58px) scale(1.018);
+}
+
+.scanline {
+  position: absolute;
+  inset: 16% 8%;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(90, 230, 255, 0.18) 48%,
+    rgba(90, 230, 255, 0.36) 50%,
+    rgba(90, 230, 255, 0.18) 52%,
+    transparent 100%
+  );
+  transform: translateY(-42%);
+  transition: opacity 280ms ease;
+}
+
+.showcase[data-active="true"] .scanline {
+  opacity: 1;
+  animation: scan 2.8s ease-in-out infinite;
+}
+
+.marker {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(126, 235, 255, 0.74);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  transition:
+    opacity 340ms ease,
+    transform 340ms ease;
+}
+
+.marker::before {
+  display: block;
+  width: clamp(46px, 10vw, 82px);
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+
+.marker::after {
+  display: block;
+  width: 5px;
+  height: 5px;
+  content: "";
+  border: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.markerTop {
+  top: 20%;
+  right: 8%;
+  transform: translateX(12px);
+}
+
+.markerBottom {
+  bottom: 17%;
+  left: 7%;
+  transform: translateX(-12px);
+}
+
+.showcase[data-active="true"] .marker {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes jetFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    transform: translateY(-42%);
+  }
+
+  50% {
+    transform: translateY(42%);
+  }
+}
+
+@media (hover: none) {
+  .showcase {
+    background:
+      radial-gradient(circle at 50% 44%, rgba(42, 184, 255, 0.13), transparent 42%),
+      linear-gradient(180deg, rgba(7, 16, 26, 0.66), rgba(4, 8, 14, 0.24));
+  }
+
+  .grid {
+    opacity: 0.18;
+  }
+
+  .blueprintLayer {
+    opacity: 0.22;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatLayer,
+  .showcase[data-active="true"] .scanline {
+    animation: none;
+  }
+
+  .jetStack,
+  .normalLayer,
+  .blueprintLayer,
+  .grid,
+  .scanline,
+  .marker,
+  .showcase::before,
+  .showcase::after {
+    transition-duration: 1ms;
+  }
+}
