@@ -1,11 +1,12 @@
 import { CodexUsageGrid } from "./components/CodexUsageGrid";
+import { ContactModal } from "./components/ContactModal";
 import { DraggableMediaLayer } from "./components/DraggableMediaLayer";
 import Image from "next/image";
 import pfp from "@/public/mascot.png";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col flex-1 items-center justify-start overflow-hidden">
+    <div className="relative flex flex-col flex-1 items-center justify-start overflow-x-hidden">
       <DraggableMediaLayer />
 
 
@@ -29,8 +30,8 @@ export default function Home() {
 
       {/* PROJECTS */}
       <div className="bg-red-600/0 w-[800px] max-w-[90vw] mt-20">
-        <p className="font-semibold text-[1.45rem]">Projects</p>
-        <p className="max-w-[600px]">xxxxx xxxxxxx - See Preview</p>
+        <p className="font-semibold text-[1.45rem]">Projects (Updating Soon)</p>
+        {/* <p className="max-w-[600px]">St. Joseph: Unveiling Our Legacy - <Link href="youtube.com">View</Link></p> */}
 
       </div>
 
@@ -38,7 +39,7 @@ export default function Home() {
       <CodexUsageGrid />
 
       {/* CONNECT */}
-      <section className="w-[800px] max-w-[90vw] mt-20 pb-20">
+      <section className="w-[800px] max-w-[90vw] mt-20 pb-12">
         <p className="font-semibold text-[1.45rem]">Connect with Me</p>
         <p className="max-w-[600px] mt-2 text-[#a3a3a3]">
           Have an idea, project, or opportunity in mind? Send me a message and
@@ -46,13 +47,20 @@ export default function Home() {
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href="mailto:shaquxn@gmail.com"
-            className="rounded-full border border-[#2d2d2d] px-5 py-2 text-sm font-medium transition hover:border-[#f2f2f2] hover:bg-[#f2f2f2] hover:text-[#0b0b0b]"
-          >
-            Email
-          </a>
+          <ContactModal />
         </div>
+      </section>
+
+      {/* MEDIA */}
+      <section
+        id="media-playground"
+        className="w-[800px] max-w-[90vw] min-h-[520px] pt-8 pb-20"
+      >
+        {/* <p className="font-semibold text-[1.45rem]">Media</p> */}
+        {/* <p className="max-w-[600px] mt-2 text-[#a3a3a3]">
+          Images and videos start here, then you can move them anywhere on the
+          page.
+        </p> */}
       </section>
 
       {/* FOOTER */}
