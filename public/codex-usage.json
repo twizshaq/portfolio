@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26",
+  "updatedAt": "2026-07-20",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-01-29",
@@ -440,9 +440,89 @@
     {
       "startDate": "2026-06-26",
       "tokens": 665489
+    },
+    {
+      "startDate": "2026-06-27",
+      "tokens": 374857
+    },
+    {
+      "startDate": "2026-06-28",
+      "tokens": 600216
+    },
+    {
+      "startDate": "2026-06-30",
+      "tokens": 680283
+    },
+    {
+      "startDate": "2026-07-01",
+      "tokens": 383718
+    },
+    {
+      "startDate": "2026-07-02",
+      "tokens": 630763
+    },
+    {
+      "startDate": "2026-07-03",
+      "tokens": 159663
+    },
+    {
+      "startDate": "2026-07-06",
+      "tokens": 5947187
+    },
+    {
+      "startDate": "2026-07-07",
+      "tokens": 17041342
+    },
+    {
+      "startDate": "2026-07-08",
+      "tokens": 33574879
+    },
+    {
+      "startDate": "2026-07-09",
+      "tokens": 10982339
+    },
+    {
+      "startDate": "2026-07-10",
+      "tokens": 25745187
+    },
+    {
+      "startDate": "2026-07-11",
+      "tokens": 40395132
+    },
+    {
+      "startDate": "2026-07-12",
+      "tokens": 44233231
+    },
+    {
+      "startDate": "2026-07-13",
+      "tokens": 59119483
+    },
+    {
+      "startDate": "2026-07-14",
+      "tokens": 4668773
+    },
+    {
+      "startDate": "2026-07-16",
+      "tokens": 3164186
+    },
+    {
+      "startDate": "2026-07-17",
+      "tokens": 33090102
+    },
+    {
+      "startDate": "2026-07-18",
+      "tokens": 37613398
+    },
+    {
+      "startDate": "2026-07-19",
+      "tokens": 71630445
+    },
+    {
+      "startDate": "2026-07-20",
+      "tokens": 17187023
     }
   ],
   "summary": {
-    "peakDailyTokens": 46979953
+    "peakDailyTokens": 71630445
   }
 }
