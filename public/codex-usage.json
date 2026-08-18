@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10",
+  "updatedAt": "2026-08-17",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-01-29",
@@ -604,6 +604,34 @@
     {
       "startDate": "2026-08-10",
       "tokens": 28536972
+    },
+    {
+      "startDate": "2026-08-11",
+      "tokens": 13089024
+    },
+    {
+      "startDate": "2026-08-12",
+      "tokens": 5781993
+    },
+    {
+      "startDate": "2026-08-13",
+      "tokens": 26885965
+    },
+    {
+      "startDate": "2026-08-14",
+      "tokens": 9781834
+    },
+    {
+      "startDate": "2026-08-15",
+      "tokens": 63217636
+    },
+    {
+      "startDate": "2026-08-16",
+      "tokens": 20223872
+    },
+    {
+      "startDate": "2026-08-17",
+      "tokens": 6586078
     }
   ],
   "summary": {
