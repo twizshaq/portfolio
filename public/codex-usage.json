@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04",
+  "updatedAt": "2026-09-21",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-01-29",
@@ -704,6 +704,74 @@
     {
       "startDate": "2026-09-04",
       "tokens": 11342731
+    },
+    {
+      "startDate": "2026-09-05",
+      "tokens": 13780092
+    },
+    {
+      "startDate": "2026-09-06",
+      "tokens": 25302213
+    },
+    {
+      "startDate": "2026-09-07",
+      "tokens": 31376003
+    },
+    {
+      "startDate": "2026-09-08",
+      "tokens": 40050452
+    },
+    {
+      "startDate": "2026-09-09",
+      "tokens": 21986241
+    },
+    {
+      "startDate": "2026-09-10",
+      "tokens": 29668927
+    },
+    {
+      "startDate": "2026-09-11",
+      "tokens": 28642307
+    },
+    {
+      "startDate": "2026-09-12",
+      "tokens": 25940345
+    },
+    {
+      "startDate": "2026-09-13",
+      "tokens": 63363574
+    },
+    {
+      "startDate": "2026-09-14",
+      "tokens": 30662093
+    },
+    {
+      "startDate": "2026-09-15",
+      "tokens": 21808553
+    },
+    {
+      "startDate": "2026-09-16",
+      "tokens": 26019019
+    },
+    {
+      "startDate": "2026-09-17",
+      "tokens": 5742745
+    },
+    {
+      "startDate": "2026-09-18",
+      "tokens": 5198686
+    },
+    {
+      "startDate": "2026-09-19",
+      "tokens": 37656311
+    },
+    {
+      "startDate": "2026-09-20",
+      "tokens": 40396415
+    },
+    {
+      "startDate": "2026-09-21",
+      "tokens": 5350315
     }
   ],
   "summary": {
