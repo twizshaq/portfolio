@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27",
+  "updatedAt": "2026-10-30",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-01-29",
@@ -755,19 +755,19 @@
     },
     {
       "startDate": "2026-09-17",
-      "tokens": 5742745
+      "tokens": 4593828
     },
     {
       "startDate": "2026-09-18",
-      "tokens": 5198686
+      "tokens": 3992791
     },
     {
       "startDate": "2026-09-19",
-      "tokens": 37656311
+      "tokens": 33031399
     },
     {
       "startDate": "2026-09-20",
-      "tokens": 40396415
+      "tokens": 36704710
     },
     {
       "startDate": "2026-09-21",
@@ -775,147 +775,159 @@
     },
     {
       "startDate": "2026-09-22",
-      "tokens": 7064669
+      "tokens": 3897077
     },
     {
       "startDate": "2026-09-23",
-      "tokens": 38908865
+      "tokens": 35696305
     },
     {
       "startDate": "2026-09-24",
-      "tokens": 12364601
+      "tokens": 10158966
     },
     {
       "startDate": "2026-09-25",
-      "tokens": 5424292
+      "tokens": 2836980
     },
     {
       "startDate": "2026-09-26",
-      "tokens": 19154225
+      "tokens": 16735104
     },
     {
       "startDate": "2026-09-27",
-      "tokens": 80891983
+      "tokens": 74979456
     },
     {
       "startDate": "2026-09-28",
-      "tokens": 15983249
+      "tokens": 13344907
     },
     {
       "startDate": "2026-09-29",
-      "tokens": 45736230
+      "tokens": 37827055
     },
     {
       "startDate": "2026-09-30",
-      "tokens": 26507532
+      "tokens": 21587401
     },
     {
       "startDate": "2026-10-01",
-      "tokens": 65581172
+      "tokens": 62245688
     },
     {
       "startDate": "2026-10-02",
-      "tokens": 29341140
+      "tokens": 26160633
     },
     {
       "startDate": "2026-10-03",
-      "tokens": 49180984
+      "tokens": 44609520
     },
     {
       "startDate": "2026-10-04",
-      "tokens": 27988989
+      "tokens": 24556575
     },
     {
       "startDate": "2026-10-05",
-      "tokens": 53517858
+      "tokens": 48404510
     },
     {
       "startDate": "2026-10-06",
-      "tokens": 49245876
+      "tokens": 47818308
     },
     {
       "startDate": "2026-10-07",
-      "tokens": 62603476
+      "tokens": 58521091
     },
     {
       "startDate": "2026-10-08",
-      "tokens": 45720661
+      "tokens": 42691514
     },
     {
       "startDate": "2026-10-09",
-      "tokens": 58082652
+      "tokens": 50358230
     },
     {
       "startDate": "2026-10-10",
-      "tokens": 75048583
+      "tokens": 70041480
     },
     {
       "startDate": "2026-10-11",
-      "tokens": 35994518
+      "tokens": 32255983
     },
     {
       "startDate": "2026-10-12",
-      "tokens": 9138255
+      "tokens": 4929831
     },
     {
       "startDate": "2026-10-13",
-      "tokens": 7284803
+      "tokens": 6239178
     },
     {
       "startDate": "2026-10-14",
-      "tokens": 26364939
+      "tokens": 20813213
     },
     {
       "startDate": "2026-10-15",
-      "tokens": 39273223
+      "tokens": 37635931
     },
     {
       "startDate": "2026-10-16",
-      "tokens": 48278364
+      "tokens": 45214471
     },
     {
       "startDate": "2026-10-17",
-      "tokens": 15321675
+      "tokens": 13124158
     },
     {
       "startDate": "2026-10-18",
-      "tokens": 62713750
+      "tokens": 60258022
     },
     {
       "startDate": "2026-10-19",
-      "tokens": 28188917
+      "tokens": 27179198
     },
     {
       "startDate": "2026-10-20",
-      "tokens": 3406137
+      "tokens": 431814
     },
     {
       "startDate": "2026-10-21",
-      "tokens": 18554427
+      "tokens": 16705441
     },
     {
       "startDate": "2026-10-22",
-      "tokens": 67596315
+      "tokens": 62439724
     },
     {
       "startDate": "2026-10-23",
-      "tokens": 17194557
+      "tokens": 13101945
     },
     {
       "startDate": "2026-10-24",
-      "tokens": 26433331
+      "tokens": 21456442
     },
     {
       "startDate": "2026-10-25",
-      "tokens": 18328925
+      "tokens": 16533734
     },
     {
       "startDate": "2026-10-26",
-      "tokens": 34454792
+      "tokens": 30449519
     },
     {
       "startDate": "2026-10-27",
-      "tokens": 3942431
+      "tokens": 1749104
+    },
+    {
+      "startDate": "2026-10-28",
+      "tokens": 1700162
+    },
+    {
+      "startDate": "2026-10-29",
+      "tokens": 53837158
+    },
+    {
+      "startDate": "2026-10-30",
+      "tokens": 24945572
     }
   ],
   "summary": {
