@@ -34,13 +34,8 @@ const snapshot = codexUsage as CodexUsageSnapshot;
 const columnCount = 49;
 const rowCount = 7;
 
-const levelClasses = [
-  "bg-[#161616]",
-  "bg-[#18304b]",
-  "bg-[#1d4166]",
-  "bg-[#245f95]",
-  "bg-[#3f9df4]",
-];
+// From no usage to the busiest days; the colours live in globals.css for each theme.
+const levelClasses = ["bg-level-0", "bg-level-1", "bg-level-2", "bg-level-3", "bg-level-4"];
 
 const monthFormatter = new Intl.DateTimeFormat("en", {
   month: "short",
@@ -197,11 +192,11 @@ export function CodexUsageGrid() {
     <section className="mt-20 w-[800px] max-w-[90vw]">
       <div className="mt-6">
         <div className="flex items-end justify-between gap-5 sm:gap-6">
-          <h2 className="text-[1.45rem] font-semibold leading-none text-[#f2f2f2]">
+          <h2 className="text-[1.45rem] font-semibold leading-none text-strong">
             Codex Activity
           </h2>
 
-          <p className="shrink-0 text-[1rem] leading-none text-[#f2f2f2]">
+          <p className="shrink-0 text-[1rem] leading-none text-strong">
             Daily
           </p>
         </div>
@@ -229,7 +224,7 @@ export function CodexUsageGrid() {
                 >
                   <Squircle
                     aria-hidden="true"
-                    className={`h-4 w-4 transition duration-150 group-hover:ring-1 group-hover:ring-[#f2f2f2]/0 ${levelClasses[cell.level]}`}
+                    className={`h-4 w-4 transition duration-150 group-hover:ring-1 group-hover:ring-strong/0 ${levelClasses[cell.level]}`}
                     cornerRadius={4}
                     cornerSmoothing={1}
                     height={16}
@@ -240,7 +235,7 @@ export function CodexUsageGrid() {
             </div>
 
             <div
-              className="mt-4 grid text-center text-[1rem] font-medium leading-none text-[#686868]"
+              className="mt-4 grid text-center text-[1rem] font-medium leading-none text-faint"
               style={{
                 gridTemplateColumns: `repeat(${monthLabels.length}, minmax(0, 1fr))`,
               }}
@@ -262,13 +257,13 @@ export function CodexUsageGrid() {
         <div
           id={`${activePopup.id}-popup`}
           role="tooltip"
-          className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-[calc(100%+0.7rem)] rounded-[16px] border border-[#2d2d2d] bg-[#111111] px-3 py-2 text-left shadow-[0_14px_40px_rgba(0,0,0,0.35)]"
+          className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-[calc(100%+0.7rem)] rounded-[16px] border border-line bg-popover px-3 py-2 text-left shadow-[0_14px_40px_var(--shadow)]"
           style={{ left: activePopup.x, top: activePopup.y }}
         >
-          <p className="whitespace-nowrap text-[0.82rem] font-semibold leading-none text-[#f2f2f2]">
+          <p className="whitespace-nowrap text-[0.82rem] font-semibold leading-none text-strong">
             {formatDisplayDate(activePopup.date)}
           </p>
-          <p className="mt-2 whitespace-nowrap text-[0.78rem] leading-none text-[#9a9a9a]">
+          <p className="mt-2 whitespace-nowrap text-[0.78rem] leading-none text-subtle">
             {formatTokenUsage(activePopup.tokens)}
           </p>
         </div>

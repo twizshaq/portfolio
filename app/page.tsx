@@ -1,27 +1,29 @@
 import { CodexUsageGrid } from "./components/CodexUsageGrid";
 import { ContactModal } from "./components/ContactModal";
-import { DraggableMediaLayer } from "./components/DraggableMediaLayer";
-import Image from "next/image";
-import pfp from "@/public/mascot.png";
+// import { DraggableMediaLayer } from "./components/DraggableMediaLayer";
+// import { StJosephDeoModal } from "./components/projects/st-joseph-deo";
+import { TasteBarbadosModal } from "./components/projects/taste-barbados";
+// import Image from "next/image";
+// import pfp from "@/public/mascot.png";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col flex-1 items-center justify-start overflow-x-hidden">
-      <DraggableMediaLayer />
+    <div data-ascii-content className="relative flex flex-col flex-1 items-center justify-start overflow-x-hidden">
+      {/* <DraggableMediaLayer /> */}
 
 
       {/* INTRO */}
       <div className="bg-red-600/0 w-[800px] max-w-[90vw] mt-10">
-        <Image
+        {/* <Image
           src={pfp}
           height={200}
           width={200}
           alt=""
           className="ml-[-50px]"
-        />
+        /> */}
         <p className="font-semibold text-[1.7rem]">Shaquon Hamilton</p>
         <p className="max-w-[600px]">
-          I’m a developer and creative builder from Barbados, focused on turning ideas into clean, useful digital experiences. I enjoy working on web apps, mobile concepts, UI design, and tech-driven projects that feel simple but meaningful.
+          I’m a developer and creative builder from Barbados, turning ideas into simple, useful web and mobile experiences.
           {/* <br /><br />
           I may not know everything, but I learn fast, stay curious, and believe that with AI and persistence, almost anything is possible. */}
         </p>
@@ -30,8 +32,9 @@ export default function Home() {
 
       {/* PROJECTS */}
       <div className="bg-red-600/0 w-[800px] max-w-[90vw] mt-20">
-        <p className="font-semibold text-[1.45rem]">Projects (Updating Soon)</p>
-        {/* <p className="max-w-[600px]">St. Joseph: Unveiling Our Legacy - <Link href="youtube.com">View</Link></p> */}
+        <p className="font-semibold text-[1.45rem]">Projects</p>
+        {/* <StJosephDeoModal /> */}
+        <TasteBarbadosModal />
 
       </div>
 
@@ -41,7 +44,7 @@ export default function Home() {
       {/* CONNECT */}
       <section className="w-[800px] max-w-[90vw] mt-20 pb-12">
         <p className="font-semibold text-[1.45rem]">Connect with Me</p>
-        <p className="max-w-[600px] mt-2 text-[#a3a3a3]">
+        <p className="max-w-[600px] mt-2 text-muted">
           Have an idea, project, or opportunity in mind? Send me a message and
           let&apos;s build something useful.
         </p>
@@ -51,17 +54,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MEDIA */}
+      {/* MEDIA (hidden)
       <section
         id="media-playground"
         className="w-[800px] max-w-[90vw] min-h-[520px] pt-8 pb-20"
       >
-        {/* <p className="font-semibold text-[1.45rem]">Media</p> */}
-        {/* <p className="max-w-[600px] mt-2 text-[#a3a3a3]">
+        <p className="font-semibold text-[1.45rem]">Media</p>
+        <p className="max-w-[600px] mt-2 text-muted">
           Images and videos start here, then you can move them anywhere on the
           page.
-        </p> */}
+        </p>
       </section>
+      */}
 
       {/* FOOTER */}
       <div>

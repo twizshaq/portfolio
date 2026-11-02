@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
 import { SquircleNoScript } from "@squircle-js/react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { AsciiBackground } from "./components/AsciiBackground";
+import { themeScript } from "./components/theme";
+import { ThemeToggle } from "./components/ThemeToggle";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "shaq",
@@ -24,12 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    // The script below swaps data-theme before the first paint, so React is told
+    // to expect that difference.
+    <html lang="en" data-theme="dark" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <SquircleNoScript />
+        <AsciiBackground />
+        <ThemeToggle />
         {children}
       </body>
     </html>

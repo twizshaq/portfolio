@@ -226,7 +226,7 @@ export function ContactModal() {
     <>
       <button
         type="button"
-        className="relative z-30 cursor-pointer touch-manipulation rounded-full border border-[#2d2d2d] px-5 py-2 text-sm font-medium transition hover:border-[#f2f2f2] hover:bg-[#f2f2f2] hover:text-[#0b0b0b]"
+        className="relative active:scale-[.95] active:duration-100 cursor-pointer touch-manipulation rounded-full border border-line px-5 py-2 text-sm font-medium transition-[background-color,border-color,color,transform] duration-500  hover:border-button hover:bg-button hover:text-button-text"
         onClick={() => {
           setIsOpen(true);
           setStatus("idle");
@@ -238,18 +238,18 @@ export function ContactModal() {
       </button>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6">
-          <div className="max-h-[calc(100dvh-2rem)] w-full max-w-[520px] overflow-y-auto rounded-[24px] border border-[#2d2d2d]/0 bg-[#0f0f0f]/0 p-5 shadow-[0_30px_90px_rgba(0,0,0,0.0)] sm:max-h-[calc(100dvh-3rem)]">
+        <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-overlay px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6">
+          <div className="max-h-[calc(100dvh-2rem)] w-full max-w-[520px] overflow-y-auto rounded-[24px] border border-transparent bg-transparent p-5 shadow-[0_30px_90px_rgba(0,0,0,0.0)] sm:max-h-[calc(100dvh-3rem)]">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[1.35rem] font-semibold">Send a message</p>
-                <p className="mt-1 text-sm text-[#9a9a9a]">
+                <p className="mt-1 text-sm text-subtle">
                   Include a subject, message, and optional image.
                 </p>
               </div>
               <button
                 type="button"
-                className="rounded-full px-3 py-1 cursor-pointer text-sm text-[#a3a3a3] transition hover:bg-white/10 hover:text-white"
+                className="absolute top-5 right-5 active:scale-[.95] rounded-full px-3 py-1 cursor-pointer text-sm text-muted transition hover:text-strong"
                 onClick={() => setIsOpen(false)}
               >
                 Close
@@ -274,8 +274,8 @@ export function ContactModal() {
                     aria-invalid={emailError ? "true" : "false"}
                     aria-describedby={emailError ? "email-error-popup" : undefined}
                     placeholder="you@example.com"
-                    className={`w-full rounded-[21px] border bg-[#151515]/50 px-4 py-3.5 text-sm font-medium outline-none transition placeholder:text-[#5f5f5f] focus:border-[#f2f2f2] ${
-                      emailError ? "border-red-400" : "border-[#2d2d2d]"
+                    className={`w-full rounded-[21px] border bg-surface px-4 py-3.5 text-sm font-medium outline-none transition placeholder:text-placeholder focus:border-strong ${
+                      emailError ? "border-red-400" : "border-line"
                     }`}
                     onBlur={(event) => validateEmail(event.currentTarget.value.trim())}
                     onChange={(event) => {
@@ -290,7 +290,7 @@ export function ContactModal() {
                     <span
                       id="email-error-popup"
                       role="alert"
-                      className="absolute left-4 top-[calc(100%+0.45rem)] z-10 rounded-[14px] border border-red-500/30 bg-[#220d0d] px-3 py-2 text-xs font-semibold text-red-100 shadow-[0_14px_36px_rgba(0,0,0,0.35)]"
+                      className="absolute left-4 top-[calc(100%+0.45rem)] z-10 rounded-[14px] border border-red-500/30 bg-danger-surface px-3 py-2 text-xs font-semibold text-danger shadow-[0_14px_36px_var(--shadow)]"
                     >
                       {emailError}
                     </span>
@@ -305,7 +305,7 @@ export function ContactModal() {
                   type="text"
                   required
                   placeholder="Project idea"
-                  className="rounded-[21px] font-medium border border-[#2d2d2d] bg-[#151515]/50 px-4 py-3.5 text-sm outline-none transition placeholder:text-[#5f5f5f] focus:border-[#f2f2f2]"
+                  className="rounded-[21px] font-medium border border-line bg-surface px-4 py-3.5 text-sm outline-none transition placeholder:text-placeholder focus:border-strong"
                 />
               </label>
 
@@ -316,7 +316,7 @@ export function ContactModal() {
                   required
                   rows={6}
                   placeholder="Tell me what you want to build."
-                  className="resize-none font-medium rounded-[25px] border border-[#2d2d2d] bg-[#151515]/50 px-4 py-3 text-sm outline-none transition placeholder:text-[#5f5f5f] focus:border-[#f2f2f2]"
+                  className="resize-none font-medium rounded-[25px] border border-line bg-surface px-4 py-3 text-sm outline-none transition placeholder:text-placeholder focus:border-strong"
                 />
               </label>
 
@@ -334,7 +334,7 @@ export function ContactModal() {
                 <div
                   role="button"
                   tabIndex={0}
-                  className="flex h-[100px] cursor-pointer flex-col justify-center overflow-hidden rounded-[30px] border border-dashed border-[#3a3a3a] bg-[#151515]/50 px-3 py-3 text-center text-sm text-[#a3a3a3] outline-none transition hover:border-[#f2f2f2] hover:text-[#f2f2f2] focus:border-[#f2f2f2]"
+                  className="flex h-[100px] cursor-pointer flex-col justify-center overflow-hidden rounded-[30px] border border-dashed border-line-strong bg-surface px-3 py-3 text-center text-sm text-muted outline-none transition hover:border-line-hover hover:text-strong focus:border-strong"
                   onClick={openFilePicker}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
@@ -348,7 +348,7 @@ export function ContactModal() {
                       {selectedImages.map((image) => (
                         <div
                           key={image.id}
-                          className="relative min-h-0 overflow-hidden rounded-[16px] border border-[#2d2d2d] bg-[#151515]/50"
+                          className="relative min-h-0 overflow-hidden rounded-[16px] border border-line bg-surface"
                         >
                           <Image
                             src={image.previewUrl}
@@ -375,10 +375,10 @@ export function ContactModal() {
                     </div>
                   ) : (
                     <span className="flex flex-col items-center justify-center">
-                      <span className="font-semibold text-[#f2f2f2]">
+                      <span className="font-semibold text-strong">
                         Tap to choose images
                       </span>
-                      <span className="mt-1 text-xs text-[#7a7a7a]">
+                      <span className="mt-1 text-xs text-faint">
                         Up to {maxImageCount} images
                       </span>
                     </span>
@@ -387,20 +387,20 @@ export function ContactModal() {
               </div>
 
               {status === "sent" ? (
-                <p className="rounded-[14px] border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <p className="rounded-[14px] border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-success">
                   Message sent.
                 </p>
               ) : null}
 
               {status === "fallback" ? (
-                <p className="rounded-[14px] border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-100">
+                <p className="rounded-[14px] border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-warning">
                   Email sending is not configured here, so your mail app was
                   opened instead.
                 </p>
               ) : null}
 
               {status === "error" ? (
-                <p className="rounded-[14px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+                <p className="rounded-[14px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-danger">
                   {errorMessage}
                 </p>
               ) : null}
@@ -408,7 +408,7 @@ export function ContactModal() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="rounded-full bg-[#f2f2f2] cursor-pointer px-5 py-3 text-sm font-semibold text-[#0b0b0b] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-full bg-button cursor-pointer px-5 py-3 text-sm font-semibold text-button-text transition hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {status === "sending" ? "Sending..." : "Send message"}
               </button>
