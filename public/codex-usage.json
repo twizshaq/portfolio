@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31",
+  "updatedAt": "2026-11-11",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-01-29",
@@ -932,9 +932,53 @@
     {
       "startDate": "2026-10-31",
       "tokens": 38049787
+    },
+    {
+      "startDate": "2026-11-01",
+      "tokens": 88438404
+    },
+    {
+      "startDate": "2026-11-02",
+      "tokens": 67569312
+    },
+    {
+      "startDate": "2026-11-03",
+      "tokens": 64405986
+    },
+    {
+      "startDate": "2026-11-04",
+      "tokens": 43145312
+    },
+    {
+      "startDate": "2026-11-05",
+      "tokens": 30559409
+    },
+    {
+      "startDate": "2026-11-06",
+      "tokens": 65139082
+    },
+    {
+      "startDate": "2026-11-07",
+      "tokens": 10960744
+    },
+    {
+      "startDate": "2026-11-08",
+      "tokens": 66500995
+    },
+    {
+      "startDate": "2026-11-09",
+      "tokens": 142921387
+    },
+    {
+      "startDate": "2026-11-10",
+      "tokens": 22779060
+    },
+    {
+      "startDate": "2026-11-11",
+      "tokens": 24421076
     }
   ],
   "summary": {
-    "peakDailyTokens": 89580988
+    "peakDailyTokens": 142921387
   }
 }
