@@ -451,8 +451,8 @@ export function DraggableMediaLayer({
     <div
       ref={layerRef}
       data-media-layer="true"
-      // Rotated images can extend past their drag bounds. Clip that spill only on X.
-      className="pointer-events-none absolute inset-0 z-10 overflow-x-clip overflow-y-visible"
+      // The layer spans the page, so clipping its edges keeps rotated images in bounds.
+      className="pointer-events-none absolute inset-0 z-10 overflow-clip"
     >
       {mediaItems.map((item) => {
         const position = positions[item.id];
