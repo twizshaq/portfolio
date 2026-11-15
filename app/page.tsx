@@ -93,7 +93,11 @@ export default function Home() {
         </div>
 
         {/* Reserve space for the collage while its images can still move around the page. */}
-        <section id="media-playground" className="min-h-[500px]" aria-label="Draggable images">
+        <section
+          id="media-playground"
+          className="mt-5 min-h-[clamp(330px,65vw,420px)]"
+          aria-label="Draggable images"
+        >
           <DraggableMediaLayer />
         </section>
       </main>

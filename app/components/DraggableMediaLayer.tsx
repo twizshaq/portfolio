@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 type MediaItem = {
   id: string;
@@ -13,7 +13,6 @@ type MediaItem = {
   initialOffsetX?: number;
   initialY?: number;
   rotate?: number;
-  radius?: number;
   zIndex?: number;
 };
 
@@ -21,6 +20,8 @@ type Position = {
   x: number;
   y: number;
 };
+
+const hoverScale = 1.03;
 
 type DraggableMediaLayerProps = {
   originId?: string;
@@ -37,7 +38,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -260,
     initialY: 120,
     rotate: 7,
-    radius: 26,
     zIndex: 2,
   },
   {
@@ -50,7 +50,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -120,
     initialY: 190,
     rotate: -5,
-    radius: 20,
     zIndex: 9,
   },
   {
@@ -63,7 +62,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -145,
     initialY: 84,
     rotate: -8,
-    radius: 18,
     zIndex: 4,
   },
   {
@@ -76,7 +74,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -100,
     initialY: 300,
     rotate: 10,
-    radius: 30,
     zIndex: 8,
   },
   {
@@ -89,7 +86,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 145,
     initialY: 64,
     rotate: -4,
-    radius: 14,
     zIndex: 5,
   },
   {
@@ -102,7 +98,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 290,
     initialY: 100,
     rotate: 8,
-    radius: 22,
     zIndex: 1,
   },
   {
@@ -115,7 +110,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -215,
     initialY: 245,
     rotate: -12,
-    radius: 24,
     zIndex: 7,
   },
   {
@@ -128,7 +122,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 5,
     initialY: 245,
     rotate: 12,
-    radius: 20,
     zIndex: 6,
   },
   {
@@ -141,7 +134,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 150,
     initialY: 255,
     rotate: -9,
-    radius: 18,
     zIndex: 9,
   },
   {
@@ -154,7 +146,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -330,
     initialY: 235,
     rotate: -6,
-    radius: 19,
     zIndex: 10,
   },
   {
@@ -167,7 +158,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 285,
     initialY: 78,
     rotate: -10,
-    radius: 999,
     zIndex: 11,
   },
   {
@@ -180,7 +170,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -18,
     initialY: 72,
     rotate: 5,
-    radius: 16,
     zIndex: 12,
   },
   {
@@ -193,7 +182,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 310,
     initialY: 252,
     rotate: 11,
-    radius: 15,
     zIndex: 13,
   },
   {
@@ -206,7 +194,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: -220,
     initialY: 56,
     rotate: 9,
-    radius: 24,
     zIndex: 14,
   },
   {
@@ -219,7 +206,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 72,
     initialY: 188,
     rotate: -7,
-    radius: 0,
     zIndex: 15,
   },
   {
@@ -232,7 +218,6 @@ const mediaItems: MediaItem[] = [
     initialOffsetX: 220,
     initialY: 184,
     rotate: 6,
-    radius: 0,
     zIndex: 16,
   },
 ];
@@ -261,18 +246,17 @@ function getDefaultPosition(
     const originCenterX = originRect.left - layerRect.left + originRect.width / 2;
     const layerHeight = getLayerHeight(layer);
 
-    return {
-      x: clamp(
-        originCenterX + (item.initialOffsetX ?? 0) * mediaScale - itemWidth / 2,
-        0,
-        Math.max(0, layerRect.width - itemWidth),
-      ),
-      y: clamp(
-        originRect.top - layerRect.top + (item.initialY ?? 88) * mediaScale,
-        0,
-        Math.max(0, layerHeight - itemHeight),
-      ),
-    };
+    return clampMediaPosition(
+      {
+        x: originCenterX + (item.initialOffsetX ?? 0) * mediaScale - itemWidth / 2,
+        y: originRect.top - layerRect.top + (item.initialY ?? 88) * mediaScale,
+      },
+      itemWidth,
+      itemHeight,
+      item.rotate ?? 0,
+      layerRect.width,
+      layerHeight,
+    );
   }
 
   return {
@@ -283,6 +267,27 @@ function getDefaultPosition(
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
+}
+
+function clampMediaPosition(
+  position: Position,
+  width: number,
+  height: number,
+  rotation: number,
+  layerWidth: number,
+  layerHeight: number,
+): Position {
+  // Keep the rotated corners and hover zoom inside the page without clipping the layer.
+  const angle = rotation * Math.PI / 180;
+  const cos = Math.abs(Math.cos(angle));
+  const sin = Math.abs(Math.sin(angle));
+  const insetX = Math.max(0, ((width * cos + height * sin) * hoverScale - width) / 2);
+  const insetY = Math.max(0, ((width * sin + height * cos) * hoverScale - height) / 2);
+
+  return {
+    x: clamp(position.x, insetX, Math.max(insetX, layerWidth - width - insetX)),
+    y: clamp(position.y, insetY, Math.max(insetY, layerHeight - height - insetY)),
+  };
 }
 
 function getMediaScale(layerWidth: number) {
@@ -333,6 +338,7 @@ export function DraggableMediaLayer({
     offsetY: number;
     width: number;
     height: number;
+    rotation: number;
   } | null>(null);
   const [positions, setPositions] =
     useState<Record<string, Position>>(getInitialPositions);
@@ -409,6 +415,7 @@ export function DraggableMediaLayer({
       offsetY: event.clientY - layerRect.top - position.y,
       width: itemWidth,
       height: itemHeight,
+      rotation: item.rotate ?? 0,
     };
   }
 
@@ -421,19 +428,17 @@ export function DraggableMediaLayer({
     }
 
     const layerRect = layer.getBoundingClientRect();
-    const layerHeight = getLayerHeight(layer);
-    const nextPosition = {
-      x: clamp(
-        event.clientX - layerRect.left - drag.offsetX,
-        0,
-        Math.max(0, layerRect.width - drag.width),
-      ),
-      y: clamp(
-        event.clientY - layerRect.top - drag.offsetY,
-        0,
-        Math.max(0, layerHeight - drag.height),
-      ),
-    };
+    const nextPosition = clampMediaPosition(
+      {
+        x: event.clientX - layerRect.left - drag.offsetX,
+        y: event.clientY - layerRect.top - drag.offsetY,
+      },
+      drag.width,
+      drag.height,
+      drag.rotation,
+      layerRect.width,
+      getLayerHeight(layer),
+    );
 
     setPositions((currentPositions) => {
       return {
@@ -451,8 +456,8 @@ export function DraggableMediaLayer({
     <div
       ref={layerRef}
       data-media-layer="true"
-      // The layer spans the page, so clipping its edges keeps rotated images in bounds.
-      className="pointer-events-none absolute inset-0 z-10 overflow-clip"
+      className="pointer-events-none absolute inset-0 z-10"
+      style={{ "--media-hover-scale": hoverScale } as CSSProperties}
     >
       {mediaItems.map((item) => {
         const position = positions[item.id];
@@ -492,10 +497,7 @@ export function DraggableMediaLayer({
                 draggable={false}
                 loading="eager"
                 unoptimized={item.src.endsWith(".gif")}
-                className="select-none transition duration-150 group-hover:scale-[1.03]"
-                style={{
-                  borderRadius: item.radius ?? 24,
-                }}
+                className="size-full select-none object-contain transition duration-150 group-hover:scale-(--media-hover-scale)"
               />
             ) : (
               <video
@@ -506,10 +508,7 @@ export function DraggableMediaLayer({
                 loop
                 playsInline
                 autoPlay
-                className="select-none transition duration-150 group-hover:scale-[1.03]"
-                style={{
-                  borderRadius: item.radius ?? 18,
-                }}
+                className="size-full select-none object-contain transition duration-150 group-hover:scale-(--media-hover-scale)"
               />
             )}
           </button>
