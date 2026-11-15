@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { DraggableMediaLayer } from "./components/DraggableMediaLayer";
 import { TokenUsageGrid } from "./components/TokenUsageGrid";
 
 // Share the URL and icon between the intro and the project entry.
@@ -90,6 +91,11 @@ export default function Home() {
         <div id="activity" className="activity-wrap">
           <TokenUsageGrid />
         </div>
+
+        {/* Reserve space for the collage while its images can still move around the page. */}
+        <section id="media-playground" className="min-h-[500px]" aria-label="Draggable images">
+          <DraggableMediaLayer />
+        </section>
       </main>
     </div>
   );

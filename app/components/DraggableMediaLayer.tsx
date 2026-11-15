@@ -14,7 +14,6 @@ type MediaItem = {
   initialY?: number;
   rotate?: number;
   radius?: number;
-  shadow?: string;
   zIndex?: number;
 };
 
@@ -39,7 +38,6 @@ const mediaItems: MediaItem[] = [
     initialY: 120,
     rotate: 7,
     radius: 26,
-    shadow: "0 0px 52px rgba(38, 126, 255, 0)",
     zIndex: 2,
   },
   {
@@ -53,7 +51,6 @@ const mediaItems: MediaItem[] = [
     initialY: 190,
     rotate: -5,
     radius: 20,
-    shadow: "0 0px 42px rgba(120, 133, 255, 0.35)",
     zIndex: 9,
   },
   {
@@ -67,7 +64,6 @@ const mediaItems: MediaItem[] = [
     initialY: 84,
     rotate: -8,
     radius: 18,
-    shadow: "0 0px 48px rgba(255, 72, 38, 0.22)",
     zIndex: 4,
   },
   {
@@ -81,7 +77,6 @@ const mediaItems: MediaItem[] = [
     initialY: 300,
     rotate: 10,
     radius: 30,
-    shadow: "0 0px 54px rgba(0, 0, 0, 0.34)",
     zIndex: 8,
   },
   {
@@ -95,7 +90,6 @@ const mediaItems: MediaItem[] = [
     initialY: 64,
     rotate: -4,
     radius: 14,
-    shadow: "0 0px 44px rgba(74, 222, 128, 0.18)",
     zIndex: 5,
   },
   {
@@ -109,7 +103,6 @@ const mediaItems: MediaItem[] = [
     initialY: 100,
     rotate: 8,
     radius: 22,
-    shadow: "0 0px 58px rgba(59, 130, 246, 0.2)",
     zIndex: 1,
   },
   {
@@ -123,7 +116,6 @@ const mediaItems: MediaItem[] = [
     initialY: 245,
     rotate: -12,
     radius: 24,
-    shadow: "0 0px 48px rgba(255, 255, 255, 0.13)",
     zIndex: 7,
   },
   {
@@ -137,7 +129,6 @@ const mediaItems: MediaItem[] = [
     initialY: 245,
     rotate: 12,
     radius: 20,
-    shadow: "0 0px 46px rgba(255, 149, 96, 0.2)",
     zIndex: 6,
   },
   {
@@ -151,7 +142,6 @@ const mediaItems: MediaItem[] = [
     initialY: 255,
     rotate: -9,
     radius: 18,
-    shadow: "0 0px 60px rgba(255, 199, 102, 0.2)",
     zIndex: 9,
   },
   {
@@ -165,7 +155,6 @@ const mediaItems: MediaItem[] = [
     initialY: 235,
     rotate: -6,
     radius: 19,
-    shadow: "0 0px 58px rgba(90, 180, 255, 0.3)",
     zIndex: 10,
   },
   {
@@ -179,7 +168,6 @@ const mediaItems: MediaItem[] = [
     initialY: 78,
     rotate: -10,
     radius: 999,
-    shadow: "0 0px 44px rgba(255, 80, 130, 0)",
     zIndex: 11,
   },
   {
@@ -193,7 +181,6 @@ const mediaItems: MediaItem[] = [
     initialY: 72,
     rotate: 5,
     radius: 16,
-    shadow: "0 0px 50px rgba(180, 220, 255, 0.22)",
     zIndex: 12,
   },
   {
@@ -207,7 +194,6 @@ const mediaItems: MediaItem[] = [
     initialY: 252,
     rotate: 11,
     radius: 15,
-    shadow: "0 0px 54px rgba(167, 139, 250, 0.25)",
     zIndex: 13,
   },
   {
@@ -221,7 +207,6 @@ const mediaItems: MediaItem[] = [
     initialY: 56,
     rotate: 9,
     radius: 24,
-    shadow: "0 0px 42px rgba(162, 89, 255, 0.28)",
     zIndex: 14,
   },
   {
@@ -235,7 +220,6 @@ const mediaItems: MediaItem[] = [
     initialY: 188,
     rotate: -7,
     radius: 0,
-    shadow: "0 0px 44px rgba(255, 153, 0, 0)",
     zIndex: 15,
   },
   {
@@ -249,7 +233,6 @@ const mediaItems: MediaItem[] = [
     initialY: 184,
     rotate: 6,
     radius: 0,
-    shadow: "0 0px 44px rgba(139, 92, 246, 0)",
     zIndex: 16,
   },
 ];
@@ -303,10 +286,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function getMediaScale(layerWidth: number) {
-  if (layerWidth >= 768) {
-    return 1;
-  }
-
+  // Cap the desktop collage at the same scale as wider mobile viewports.
   return clamp(layerWidth / 520, 0.58, 0.82);
 }
 
@@ -514,8 +494,6 @@ export function DraggableMediaLayer({
                 className="select-none transition duration-150 group-hover:scale-[1.03]"
                 style={{
                   borderRadius: item.radius ?? 24,
-                  boxShadow:
-                    item.shadow ?? "0 18px 45px rgba(0, 0, 0, 0.28)",
                 }}
               />
             ) : (
@@ -530,8 +508,6 @@ export function DraggableMediaLayer({
                 className="select-none transition duration-150 group-hover:scale-[1.03]"
                 style={{
                   borderRadius: item.radius ?? 18,
-                  boxShadow:
-                    item.shadow ?? "0 18px 45px rgba(0, 0, 0, 0.28)",
                 }}
               />
             )}
