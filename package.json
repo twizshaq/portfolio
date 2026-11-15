@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "usage:refresh": "node scripts/refresh-codex-usage.mjs"
+    "usage:refresh": "npm run usage:refresh:claude && npm run usage:refresh:codex",
+    "usage:refresh:codex": "node scripts/refresh-codex-usage.mjs",
+    "usage:refresh:claude": "node scripts/refresh-claude-code-usage.mjs"
   },
   "dependencies": {
     "@squircle-js/react": "^1.3.0",

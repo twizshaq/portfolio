@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,7 +7,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 const outputPath = path.join(projectRoot, "public", "codex-usage.json");
-const codexBin = process.env.CODEX_BIN || "codex";
+// The ChatGPT desktop app bundles the Codex CLI; use it when `codex` isn't on PATH.
+const bundledCodexBin = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex";
+const codexBin =
+  process.env.CODEX_BIN || (existsSync(bundledCodexBin) ? bundledCodexBin : "codex");
 const requestTimeoutMs = Number(process.env.CODEX_USAGE_TIMEOUT_MS || 30000);
 
 function todayIsoDate() {

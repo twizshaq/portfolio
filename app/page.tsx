@@ -1,76 +1,96 @@
-import { CodexUsageGrid } from "./components/CodexUsageGrid";
-import { ContactModal } from "./components/ContactModal";
-// import { DraggableMediaLayer } from "./components/DraggableMediaLayer";
-// import { StJosephDeoModal } from "./components/projects/st-joseph-deo";
-import { TasteBarbadosModal } from "./components/projects/taste-barbados";
-// import Image from "next/image";
-// import pfp from "@/public/mascot.png";
+import Image from "next/image";
+import { TokenUsageGrid } from "./components/TokenUsageGrid";
+
+// Share the URL and icon between the intro and the project entry.
+const tasteBarbados = {
+  href: "https://tastebarbados.app",
+  icon: "/projects/taste-barbados-icon.png",
+};
 
 export default function Home() {
   return (
-    <div data-ascii-content className="relative flex flex-col flex-1 items-center justify-start overflow-x-hidden">
-      {/* <DraggableMediaLayer /> */}
-
-
-      {/* INTRO */}
-      <div className="bg-red-600/0 w-[800px] max-w-[90vw] mt-10">
-        {/* <Image
-          src={pfp}
-          height={200}
-          width={200}
-          alt=""
-          className="ml-[-50px]"
-        /> */}
-        <p className="font-semibold text-[1.7rem]">Shaquon Hamilton</p>
-        <p className="max-w-[600px]">
-          I’m a developer and creative builder from Barbados, turning ideas into simple, useful web and mobile experiences.
-          {/* <br /><br />
-          I may not know everything, but I learn fast, stay curious, and believe that with AI and persistence, almost anything is possible. */}
-        </p>
-      </div>
-
-
-      {/* PROJECTS */}
-      <div className="bg-red-600/0 w-[800px] max-w-[90vw] mt-20">
-        <p className="font-semibold text-[1.45rem]">Projects</p>
-        {/* <StJosephDeoModal /> */}
-        <TasteBarbadosModal />
-
-      </div>
-
-      {/* CODEX USAGE */}
-      <CodexUsageGrid />
-
-      {/* CONNECT */}
-      <section className="w-[800px] max-w-[90vw] mt-20 pb-12">
-        <p className="font-semibold text-[1.45rem]">Connect with Me</p>
-        <p className="max-w-[600px] mt-2 text-muted">
-          Have an idea, project, or opportunity in mind? Send me a message and
-          let&apos;s build something useful.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <ContactModal />
+    <div id="top" className="portfolio-shell">
+      {/* A small, familiar navigation keeps the introduction at the centre. */}
+      <header className="site-header">
+        <div className="site-header-inner">
+          <a className="home-mark" href="#top" aria-label="Shaquon Hamilton, home">
+            {/* Uneven, rounded rays give the burst its hand-drawn shape. */}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="home-mark-pink" gradientUnits="userSpaceOnUse" x1="3" y1="28" x2="29" y2="4">
+                  <stop offset="0%" stopColor="var(--accent)" />
+                  <stop offset="100%" stopColor="var(--accent-soft)" />
+                </linearGradient>
+              </defs>
+              <path
+                stroke="url(#home-mark-pink) currentColor"
+                strokeWidth="3.6"
+                strokeLinecap="round"
+                d="M15.8 16Q14.9 9 12.9 3.5
+                   M15.8 16Q18.1 10.2 22 5.7
+                   M15.8 16Q22.4 12.9 28.1 12.6
+                   M15.8 16Q23.8 17.2 28.9 21
+                   M15.8 16Q20.1 21.6 21.2 28
+                   M15.8 16Q15.7 23.4 13.5 28.5
+                   M15.8 16Q10.6 22.3 5.6 24
+                   M15.8 16Q9.8 16.4 3.1 14.4
+                   M15.8 16Q10.8 11.8 7.7 7"
+              />
+            </svg>
+          </a>
+          <nav aria-label="Main navigation">
+            <a href="#activity">Activity</a>
+            <a href="mailto:shaquxn@gmail.com">Say hello</a>
+          </nav>
         </div>
-      </section>
+      </header>
 
-      {/* MEDIA (hidden)
-      <section
-        id="media-playground"
-        className="w-[800px] max-w-[90vw] min-h-[520px] pt-8 pb-20"
-      >
-        <p className="font-semibold text-[1.45rem]">Media</p>
-        <p className="max-w-[600px] mt-2 text-muted">
-          Images and videos start here, then you can move them anywhere on the
-          page.
-        </p>
-      </section>
-      */}
+      <main className="portfolio-main">
+        <section className="intro" aria-labelledby="intro-title">
+          <h1 id="intro-title">Shaquon Hamilton</h1>
+          <div className="intro-copy">
+            <p>
+              I’m a developer and creative builder from{" "}
+              <span className="island-name">
+                <span aria-hidden="true">🇧🇧</span>{" "}<span className="island-note">Barbados</span>
+              </span>, making things for the web and mobile.
+            </p>
+            <p>I like taking an idea, pulling it apart, and figuring out how to make it <em>simple, useful, and a little more human.</em></p>
+            <p>
+              currently building{" "}
+              <a href={tasteBarbados.href} target="_blank" rel="noreferrer" className="taste-link">
+                <Image src={tasteBarbados.icon} alt="" width={23} height={23} />
+                <span className="taste-link-text">Taste Barbados</span>
+              </a>
+            </p>
+          </div>
+        </section>
 
-      {/* FOOTER */}
-      <div>
+        <section className="projects" aria-labelledby="projects-title">
+          <h2 id="projects-title">Projects</h2>
+          {/* Link directly to the project so the entry needs no modal state. */}
+          <a
+            className="project-entry"
+            href={tasteBarbados.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-labelledby="taste-barbados-title"
+            aria-describedby="taste-barbados-description"
+          >
+            <Image src={tasteBarbados.icon} alt="" width={40} height={40} />
+            <div>
+              <h3 id="taste-barbados-title">Taste Barbados</h3>
+              <p id="taste-barbados-description">
+                Find local cafés, rum shops, food trucks, and restaurants across Barbados.
+              </p>
+            </div>
+          </a>
+        </section>
 
-      </div>
+        <div id="activity" className="activity-wrap">
+          <TokenUsageGrid />
+        </div>
+      </main>
     </div>
   );
 }

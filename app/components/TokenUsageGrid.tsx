@@ -1,10 +1,11 @@
 "use client";
 
 import { Squircle } from "@squircle-js/react";
-import { useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import claudeCodeUsage from "@/public/claude-code-usage.json";
 import codexUsage from "@/public/codex-usage.json";
 
-type CodexUsageSnapshot = {
+type UsageSnapshot = {
   updatedAt: string;
   dailyUsageBuckets: Array<{
     startDate: string;
@@ -16,26 +17,31 @@ type CodexUsageSnapshot = {
 };
 
 type UsageCell = {
+  claudeCodeTokens: number;
+  codexTokens: number;
   date: string;
   id: string;
   level: number;
   tokens: number;
 };
 
-type ActiveUsagePopup = {
-  date: string;
-  id: string;
-  tokens: number;
+type ActiveUsagePopup = UsageCell & {
   x: number;
   y: number;
 };
 
-const snapshot = codexUsage as CodexUsageSnapshot;
+const codexSnapshot = codexUsage as UsageSnapshot;
+const claudeCodeSnapshot = claudeCodeUsage as UsageSnapshot;
 const columnCount = 49;
 const rowCount = 7;
 
-// From no usage to the busiest days; the colours live in globals.css for each theme.
-const levelClasses = ["bg-level-0", "bg-level-1", "bg-level-2", "bg-level-3", "bg-level-4"];
+// Use charcoal for zero tokens, then progressively brighter shades of the site pink.
+// Apply each fill directly so it doesn't depend on generated CSS classes.
+const levelColors = [
+  "#161616", "#411127", "#601533",
+  "#81193f", "#a31d4d", "#c6235d",
+  "#e92770", "#ff297c", "#ff619f",
+];
 
 const monthFormatter = new Intl.DateTimeFormat("en", {
   month: "short",
@@ -102,7 +108,7 @@ function startOfWeek(date: Date) {
   return addDays(date, -date.getUTCDay());
 }
 
-function getUsageByDate() {
+function getUsageByDate(snapshot: UsageSnapshot) {
   return new Map(
     snapshot.dailyUsageBuckets.map((bucket) => [
       bucket.startDate,
@@ -116,24 +122,37 @@ function getLevel(tokens: number, peakTokens: number) {
     return 0;
   }
 
-  return Math.max(1, Math.ceil((tokens / peakTokens) * 4));
+  // Spread lower counts across more shades so peak days don't flatten the grid.
+  const intensity = Math.sqrt(Math.min(1, tokens / peakTokens));
+  return Math.max(1, Math.ceil(intensity * (levelColors.length - 1)));
 }
 
 function buildCells(): UsageCell[] {
-  const usageByDate = getUsageByDate();
-  const peakTokens =
-    snapshot.summary?.peakDailyTokens ??
-    Math.max(0, ...snapshot.dailyUsageBuckets.map((bucket) => bucket.tokens));
-  const latestDate = parseDate(snapshot.updatedAt);
+  const codexByDate = getUsageByDate(codexSnapshot);
+  const claudeCodeByDate = getUsageByDate(claudeCodeSnapshot);
+  const allDates = new Set([...codexByDate.keys(), ...claudeCodeByDate.keys()]);
+  const peakTokens = Math.max(
+    0,
+    ...[...allDates].map(
+      (date) => (codexByDate.get(date) ?? 0) + (claudeCodeByDate.get(date) ?? 0),
+    ),
+  );
+  const latestDate = parseDate(
+    [codexSnapshot.updatedAt, claudeCodeSnapshot.updatedAt].sort().at(-1)!,
+  );
   const gridStart = addDays(startOfWeek(latestDate), -(columnCount - 1) * rowCount);
 
   return Array.from({ length: columnCount * rowCount }, (_, index) => {
     const column = Math.floor(index / rowCount);
     const row = index % rowCount;
     const date = formatDate(addDays(gridStart, column * rowCount + row));
-    const tokens = usageByDate.get(date) ?? 0;
+    const codexTokens = codexByDate.get(date) ?? 0;
+    const claudeCodeTokens = claudeCodeByDate.get(date) ?? 0;
+    const tokens = codexTokens + claudeCodeTokens;
 
     return {
+      claudeCodeTokens,
+      codexTokens,
       date,
       id: `daily-${date}`,
       level: getLevel(tokens, peakTokens),
@@ -155,18 +174,48 @@ function buildMonthLabels(cells: UsageCell[]): string[] {
     .filter(Boolean);
 }
 
-export function CodexUsageGrid() {
+export function TokenUsageGrid() {
   const [activePopup, setActivePopup] = useState<ActiveUsagePopup | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [edgeMask, setEdgeMask] = useState<string>();
   const cells = buildCells();
   const monthLabels = buildMonthLabels(cells);
+
+  useEffect(() => {
+    const scroller = scrollRef.current;
+    const content = scroller?.firstElementChild;
+    if (!scroller || !content) return;
+
+    function updateEdges() {
+      if (!scroller) return;
+      const overflow = scroller.scrollWidth - scroller.clientWidth;
+      // The grid starts at the right edge, so scrolling left gives a negative offset.
+      const offset = -scroller.scrollLeft;
+      const fadeLeft = overflow - offset > 1;
+      const fadeRight = offset > 1 && overflow > 1;
+      const leftEdge = fadeLeft ? "transparent, black 16px" : "black";
+      const rightEdge = fadeRight ? "black calc(100% - 16px), transparent" : "black";
+
+      setEdgeMask(fadeLeft || fadeRight ? `linear-gradient(to right, ${leftEdge}, ${rightEdge})` : undefined);
+    }
+
+    const observer = new ResizeObserver(updateEdges);
+    observer.observe(scroller);
+    observer.observe(content);
+    scroller.addEventListener("scroll", updateEdges, { passive: true });
+    updateEdges();
+
+    return () => {
+      observer.disconnect();
+      scroller.removeEventListener("scroll", updateEdges);
+    };
+  }, []);
 
   function showPopup(cell: UsageCell, element: HTMLElement) {
     const rect = element.getBoundingClientRect();
 
     setActivePopup({
-      date: cell.date,
-      id: cell.id,
-      tokens: cell.tokens,
+      ...cell,
       x: rect.left + rect.width / 2,
       y: rect.top,
     });
@@ -193,7 +242,7 @@ export function CodexUsageGrid() {
       <div className="mt-6">
         <div className="flex items-end justify-between gap-5 sm:gap-6">
           <h2 className="text-[1.45rem] font-semibold leading-none text-strong">
-            Codex Activity
+            Token Activity
           </h2>
 
           <p className="shrink-0 text-[1rem] leading-none text-strong">
@@ -202,8 +251,10 @@ export function CodexUsageGrid() {
         </div>
 
         <div
-          className="codex-scrollbar-hidden mt-7 overflow-x-auto pb-1"
+          ref={scrollRef}
+          className="token-scrollbar-hidden mt-7 overflow-x-auto pb-1"
           dir="rtl"
+          style={{ maskImage: edgeMask, WebkitMaskImage: edgeMask }}
         >
           <div className="w-max" dir="ltr">
             <div className="grid grid-flow-col grid-rows-7 gap-[7px]">
@@ -215,16 +266,19 @@ export function CodexUsageGrid() {
                   aria-describedby={
                     activePopup?.id === cell.id ? `${cell.id}-popup` : undefined
                   }
-                  aria-label={`${formatDisplayDate(cell.date)}: ${formatTokenUsage(
-                    cell.tokens,
-                  )}`}
+                  aria-label={`${formatDisplayDate(cell.date)}: Codex ${formatTokenUsage(
+                    cell.codexTokens,
+                  )}, Claude Code ${formatTokenUsage(
+                    cell.claudeCodeTokens,
+                  )}, total ${formatTokenUsage(cell.tokens)}`}
                   className="group h-4 w-4 touch-manipulation border-0 bg-transparent p-0 outline-none cursor-default"
                   onPointerEnter={(event) => handlePointerEnter(cell, event)}
                   onPointerLeave={handlePointerLeave}
                 >
                   <Squircle
                     aria-hidden="true"
-                    className={`h-4 w-4 transition duration-150 group-hover:ring-1 group-hover:ring-strong/0 ${levelClasses[cell.level]}`}
+                    className="h-4 w-4 transition duration-150 group-hover:ring-1 group-hover:ring-strong/0"
+                    style={{ backgroundColor: levelColors[cell.level] }}
                     cornerRadius={4}
                     cornerSmoothing={1}
                     height={16}
@@ -263,9 +317,22 @@ export function CodexUsageGrid() {
           <p className="whitespace-nowrap text-[0.82rem] font-semibold leading-none text-strong">
             {formatDisplayDate(activePopup.date)}
           </p>
-          <p className="mt-2 whitespace-nowrap text-[0.78rem] leading-none text-subtle">
-            {formatTokenUsage(activePopup.tokens)}
-          </p>
+          <dl className="mt-2.5 grid grid-cols-[auto_auto] gap-x-4 gap-y-1.5 whitespace-nowrap text-[0.78rem] leading-none">
+            <dt className="text-subtle">Codex</dt>
+            <dd className="text-right tabular-nums text-subtle">
+              {formatTokenUsage(activePopup.codexTokens)}
+            </dd>
+            <dt className="text-subtle">Claude Code</dt>
+            <dd className="text-right tabular-nums text-subtle">
+              {formatTokenUsage(activePopup.claudeCodeTokens)}
+            </dd>
+            <dt className="mt-0.5 border-t border-line pt-1.5 font-semibold text-strong">
+              Total
+            </dt>
+            <dd className="mt-0.5 border-t border-line pt-1.5 text-right font-semibold tabular-nums text-strong">
+              {formatTokenUsage(activePopup.tokens)}
+            </dd>
+          </dl>
         </div>
       ) : null}
     </section>

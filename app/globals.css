@@ -1,17 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gamja+Flower&family=Kalam:wght@400;700&display=swap');
 @import "tailwindcss";
 
-/*
- * Themes. <html data-theme="dark|light"> is set before the page paints by the
- * script in layout.tsx (saved choice, else the device setting), and switched by
- * the toggle in the top-right corner. `dark:` and `light:` follow it too.
- */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
-
-:root,
-[data-theme="dark"] {
+/* Use the site's dark palette for all visitors and for native controls. */
+:root {
   color-scheme: dark;
-  --background: #0b0b0b;
+  --background: #09090b;
   --foreground: #ededed;
   --strong: #f2f2f2; /* headings and emphasis */
   --soft: #d6d6d6; /* body text in popups */
@@ -33,43 +26,12 @@
   --warning: #fef9c3;
   --danger: #fee2e2;
   --danger-surface: #220d0d;
-  /* Codex activity squares, from no usage to the busiest days */
-  --level-0: #161616;
-  --level-1: #18304b;
-  --level-2: #1d4166;
-  --level-3: #245f95;
-  --level-4: #3f9df4;
-}
-
-[data-theme="light"] {
-  color-scheme: light;
-  --background: #fafafa;
-  --foreground: #171717;
-  --strong: #111111;
-  --soft: #333333;
-  --muted: #5c5c5c;
-  --subtle: #6b6b6b;
-  --faint: #8a8a8a;
-  --placeholder: #a3a3a3;
-  --line: #dedede;
-  --line-strong: #cfcfcf;
-  --line-hover: #8f8f8f;
-  --surface: rgb(255 255 255 / 0.65);
-  --popover: #ffffff;
-  --overlay: rgb(250 250 250 / 0.72);
-  --button: #111111;
-  --button-text: #fafafa;
-  --button-hover: #000000;
-  --shadow: rgb(0 0 0 / 0.12);
-  --success: #065f46;
-  --warning: #854d0e;
-  --danger: #991b1b;
-  --danger-surface: #fff1f1;
-  --level-0: #ebebeb;
-  --level-1: #c7dcf4;
-  --level-2: #95bdea;
-  --level-3: #5a96dc;
-  --level-4: #2f74c6;
+  /* Share the same pink endpoints between the nav mark and inline accents. */
+  --accent: #FF297C;
+  --accent-soft: #FF619F;
+  --ink-soft: #e2e2e2; /* main bio text */
+  --paper-line: #242025; /* subtle dividers around Projects */
+  /* Token activity squares, from no usage to the busiest days */
 }
 
 @theme inline {
@@ -94,11 +56,6 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-danger-surface: var(--danger-surface);
-  --color-level-0: var(--level-0);
-  --color-level-1: var(--level-1);
-  --color-level-2: var(--level-2);
-  --color-level-3: var(--level-3);
-  --color-level-4: var(--level-4);
   --font-sans: Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
@@ -107,15 +64,149 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
 }
 
-.codex-scrollbar-hidden {
+.token-scrollbar-hidden {
   scrollbar-width: none;
 }
 
-.codex-scrollbar-hidden::-webkit-scrollbar {
+.token-scrollbar-hidden::-webkit-scrollbar {
   display: none;
+}
+
+/* The portfolio uses an editorial type pairing, with local fallbacks if fonts are unavailable. */
+
+body { font-family: "DM Sans", "Avenir Next", sans-serif; }
+/* Use the same width and gutters for the fixed nav and the page content. */
+.portfolio-shell {
+  --portfolio-width: min(100% - 48px, 680px);
+  /* Keep the fixed header compact while reserving room for its fade. */
+  --header-height: 56px;
+  --header-fade: 16px;
+  width: var(--portfolio-width);
+  margin: 0 auto;
+  padding-top: var(--header-height);
+}
+.site-header {
+  position: fixed;
+  z-index: 60;
+  inset: 0 0 auto;
+  background: var(--background);
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 100% 0 auto;
+  height: var(--header-fade);
+  background: linear-gradient(to bottom, var(--background), transparent);
+  pointer-events: none;
+}
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--portfolio-width);
+  height: var(--header-height);
+  margin: 0 auto;
+  /* Bias the logo and links toward the fade within the fixed header height. */
+  padding-top: 16px;
+}
+.home-mark {
+  display: grid;
+  flex: none;
+  min-height: 44px;
+  place-items: center;
+  color: var(--accent);
+}
+.site-header nav { display: flex; gap: 27px; align-items: center; color: var(--muted); font-size: 13px; }
+.site-header nav a { transition: color .2s ease; }
+.site-header nav a:hover { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+/* Leave breathing room below the activity grid at the end of the page. */
+.portfolio-main { padding: 82px 0 48px; }
+/* Scale the handwritten name while keeping it compact on narrow screens. */
+.intro h1 {
+  margin: 0 0 16px;
+  color: var(--strong);
+  font-family: "Gamja Flower", "Kalam", "Noteworthy", cursive;
+  font-size: clamp(32px, 4.8vw, 40px);
+  font-weight: 400;
+  line-height: 1.25;
+}
+.intro-copy { max-width: 610px; color: var(--ink-soft); font-size: 16px; line-height: 1.95; }
+.intro-copy p + p { margin-top: 17px; }
+.intro-copy em { color: var(--strong); font-family: Georgia, serif; font-size: 1.05em; }
+/* Distinguish the link from the location without underlining its icon. */
+.island-note, .taste-link {
+  color: var(--strong);
+  font-weight: 600;
+}
+.taste-link-text {
+  text-decoration: underline dotted;
+  text-underline-offset: .2em;
+}
+.island-name, .taste-link { white-space: nowrap; }
+/* Align the icon independently so the link text shares the sentence baseline. */
+.taste-link img {
+  display: inline-block;
+  width: 1.35em;
+  height: 1.35em;
+  margin-inline-end: .3em;
+  vertical-align: -.3em;
+  border-radius: 6px;
+}
+.projects, .activity-wrap {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--paper-line);
+}
+.projects h2, .activity-wrap h2 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+/* Keep the project row aligned with the bio, including when its copy wraps. */
+.project-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 16px;
+}
+.project-entry img {
+  flex: none;
+  border-radius: 9px;
+}
+.project-entry h3 {
+  color: var(--strong);
+  font-size: 15px;
+  font-weight: 600;
+}
+.project-entry p {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.project-entry:is(:hover, :focus-visible) h3 {
+  text-decoration: underline dotted;
+  text-underline-offset: .2em;
+}
+.activity-wrap {
+  scroll-margin-top: calc(var(--header-height) + var(--header-fade));
+}
+.activity-wrap section { width: 100%; max-width: 100%; margin-top: 0; }
+.activity-wrap section > div:first-child { margin-top: 0; }
+.activity-wrap section > div:first-child > div:first-child > p { color: var(--faint); font-size: 12px; }
+@media (max-width: 540px) {
+  .portfolio-shell {
+    --portfolio-width: calc(100% - 40px);
+    --header-height: 48px;
+  }
+  .site-header nav { gap: 15px; font-size: 12px; }
+  .portfolio-main { padding-top: 55px; }
+  .intro h1 { font-size: clamp(28px, 7.4vw, 36px); }
+  .intro-copy { font-size: 15px; line-height: 1.9; }
+  .projects, .activity-wrap { margin-top: 42px; }
 }
