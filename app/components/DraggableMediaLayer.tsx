@@ -286,8 +286,8 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function getMediaScale(layerWidth: number) {
-  // Cap the desktop collage at the same scale as wider mobile viewports.
-  return clamp(layerWidth / 520, 0.58, 0.82);
+  // Give the collage more room on phones while keeping the desktop cap.
+  return clamp(layerWidth / 680, 0.46, 0.82);
 }
 
 function scaleDimension(value: number, mediaScale: number) {
@@ -451,7 +451,8 @@ export function DraggableMediaLayer({
     <div
       ref={layerRef}
       data-media-layer="true"
-      className="pointer-events-none absolute inset-0 z-10 overflow-visible"
+      // Rotated images can extend past their drag bounds. Clip that spill only on X.
+      className="pointer-events-none absolute inset-0 z-10 overflow-x-clip overflow-y-visible"
     >
       {mediaItems.map((item) => {
         const position = positions[item.id];
