@@ -13,6 +13,7 @@ type MediaItem = {
   initialOffsetX?: number;
   initialY?: number;
   rotate?: number;
+  borderRadius?: number;
   zIndex?: number;
 };
 
@@ -22,6 +23,8 @@ type Position = {
 };
 
 const hoverScale = 1.03;
+// Round each image independently of the collage layout and drag bounds.
+const mediaCornerRadius = 20;
 
 type DraggableMediaLayerProps = {
   originId?: string;
@@ -201,6 +204,8 @@ const mediaItems: MediaItem[] = [
     type: "image",
     src: "https://shaq-portfolio-webapp.s3.us-east-1.amazonaws.com/aws-icon.webp",
     alt: "AWS icon",
+    // Preserve the original silhouette of the AWS logo.
+    borderRadius: 0,
     width: 92,
     height: 92,
     initialOffsetX: 72,
@@ -474,7 +479,7 @@ export function DraggableMediaLayer({
             key={item.id}
             type="button"
             aria-label={`Move ${item.alt}`}
-            className="group pointer-events-auto absolute touch-none cursor-grab border-0 bg-transparent p-0 active:cursor-grabbing"
+            className="group pointer-events-auto absolute grid grid-cols-1 grid-rows-1 touch-none cursor-grab place-items-center border-0 bg-transparent p-0 active:cursor-grabbing"
             style={{
               height: itemHeight,
               left: position.x,
@@ -488,6 +493,7 @@ export function DraggableMediaLayer({
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
           >
+            {/* Round the media itself, after fitting its native aspect ratio inside the drag area. */}
             {item.type === "image" ? (
               <Image
                 src={item.src}
@@ -497,7 +503,8 @@ export function DraggableMediaLayer({
                 draggable={false}
                 loading="eager"
                 unoptimized={item.src.endsWith(".gif")}
-                className="size-full select-none object-contain transition duration-150 group-hover:scale-(--media-hover-scale)"
+                className="h-auto w-auto max-h-full max-w-full select-none transition duration-150 group-hover:scale-(--media-hover-scale)"
+                style={{ borderRadius: item.borderRadius ?? mediaCornerRadius }}
               />
             ) : (
               <video
@@ -508,7 +515,8 @@ export function DraggableMediaLayer({
                 loop
                 playsInline
                 autoPlay
-                className="size-full select-none object-contain transition duration-150 group-hover:scale-(--media-hover-scale)"
+                className="h-auto w-auto max-h-full max-w-full select-none transition duration-150 group-hover:scale-(--media-hover-scale)"
+                style={{ borderRadius: item.borderRadius ?? mediaCornerRadius }}
               />
             )}
           </button>
