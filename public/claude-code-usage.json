@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16",
+  "updatedAt": "2026-11-19",
   "dailyUsageBuckets": [
     {
       "startDate": "2026-10-10",
@@ -112,6 +112,14 @@
     {
       "startDate": "2026-11-16",
       "tokens": 1555944
+    },
+    {
+      "startDate": "2026-11-18",
+      "tokens": 15665012
+    },
+    {
+      "startDate": "2026-11-19",
+      "tokens": 11773177
     }
   ],
   "summary": {
