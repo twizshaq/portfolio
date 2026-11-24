@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,14 +12,48 @@ const bundledCodexBin = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/
 const codexBin =
   process.env.CODEX_BIN || (existsSync(bundledCodexBin) ? bundledCodexBin : "codex");
 const requestTimeoutMs = Number(process.env.CODEX_USAGE_TIMEOUT_MS || 30000);
+const codexStateDir = process.env.CODEX_HOME || path.join(process.env.HOME || "", ".codex");
+
+const localUsageQuery = `
+WITH entries AS (
+  SELECT
+    date(ts, 'unixepoch', 'localtime') AS start_date,
+    substr(
+      feedback_log_body,
+      instr(feedback_log_body, 'turn_id=') + 8,
+      instr(substr(feedback_log_body, instr(feedback_log_body, 'turn_id=') + 8), ' ') - 1
+    ) AS turn_id,
+    CAST(
+      substr(
+        feedback_log_body,
+        instr(feedback_log_body, 'total_usage_tokens=') + 19,
+        instr(
+          substr(feedback_log_body, instr(feedback_log_body, 'total_usage_tokens=') + 19),
+          ' '
+        ) - 1
+      ) AS INTEGER
+    ) AS tokens
+  FROM logs
+  WHERE target = 'codex_core::session::turn'
+    AND feedback_log_body LIKE '%post sampling token usage%'
+), turns AS (
+  SELECT start_date, turn_id, MAX(tokens) AS tokens
+  FROM entries
+  GROUP BY start_date, turn_id
+)
+SELECT start_date AS startDate, SUM(tokens) AS tokens
+FROM turns
+GROUP BY start_date
+ORDER BY start_date;
+`;
 
 function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function normalizeUsage(result) {
-  const dailyUsageBuckets = Array.isArray(result?.dailyUsageBuckets)
-    ? result.dailyUsageBuckets
+function normalizeBuckets(buckets) {
+  return Array.isArray(buckets)
+    ? buckets
         .filter(
           (bucket) =>
             typeof bucket?.startDate === "string" &&
@@ -31,6 +65,18 @@ function normalizeUsage(result) {
         }))
         .sort((a, b) => a.startDate.localeCompare(b.startDate))
     : [];
+}
+
+function normalizeUsage(result, localBuckets) {
+  const remoteBuckets = normalizeBuckets(result?.dailyUsageBuckets);
+  const latestRemoteDate = remoteBuckets.at(-1)?.startDate;
+  // The account feed remains the source of truth; local logs only fill newer days it omits.
+  const dailyUsageBuckets = [
+    ...remoteBuckets,
+    ...localBuckets.filter(
+      (bucket) => !latestRemoteDate || bucket.startDate > latestRemoteDate,
+    ),
+  ];
 
   return {
     updatedAt: dailyUsageBuckets.at(-1)?.startDate || todayIsoDate(),
@@ -41,6 +87,64 @@ function normalizeUsage(result) {
         Math.max(0, ...dailyUsageBuckets.map((bucket) => bucket.tokens)),
     },
   };
+}
+
+async function newestCodexLogDatabase() {
+  const entries = await readdir(codexStateDir, { withFileTypes: true });
+  const candidates = await Promise.all(
+    entries
+      .filter((entry) => entry.isFile() && /^logs_\d+\.sqlite$/.test(entry.name))
+      .map(async (entry) => {
+        const filePath = path.join(codexStateDir, entry.name);
+        return { filePath, modifiedAt: (await stat(filePath)).mtimeMs };
+      }),
+  );
+
+  return candidates.sort((a, b) => b.modifiedAt - a.modifiedAt)[0]?.filePath;
+}
+
+function queryLocalUsage(databasePath) {
+  return new Promise((resolve, reject) => {
+    const child = spawn("sqlite3", ["-json", databasePath, localUsageQuery], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk;
+    });
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(`Local Codex usage query failed with code ${code}: ${stderr}`));
+        return;
+      }
+
+      try {
+        const rows = JSON.parse(stdout);
+        resolve(normalizeBuckets(rows));
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+}
+
+async function readLocalUsage() {
+  try {
+    const databasePath = await newestCodexLogDatabase();
+    // A missing or locked log database should never block the account-level export.
+    return databasePath ? await queryLocalUsage(databasePath) : [];
+  } catch (error) {
+    console.warn(`Skipping local Codex usage fallback: ${error.message}`);
+    return [];
+  }
 }
 
 function readCodexUsage() {
@@ -154,7 +258,8 @@ function readCodexUsage() {
   });
 }
 
-const usage = normalizeUsage(await readCodexUsage());
+const [remoteUsage, localUsage] = await Promise.all([readCodexUsage(), readLocalUsage()]);
+const usage = normalizeUsage(remoteUsage, localUsage);
 
 await mkdir(path.dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(usage, null, 2)}\n`);
